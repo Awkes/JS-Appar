@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="sv-SE">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rövarspråket</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        body {
+            background-image: url();
+            display: flex;
+            justify-items: center;
+            padding: 0 10px;
+            flex-direction: column;
+            height: 100vh;
+            font-family: Verdana;
+        }
+
+        body * {
+            padding: 5px;
+        }
+
+        #container {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: rgb(250, 250, 250);
+            margin: auto;
+            min-width: 75vw;
+        }
+
+        textarea {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+            width: 100%;
+            height: 30vh;
+            font-family: Verdana;
+            font-size: 1.5em;
+        }
+
+        body>p {
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Rövarspråket</h1>
+        <p>
+            Den här lilla applikationen låter dig översätta ren svenska till rövarspråket.
+        </p>
+        <div>
+            <h3>SVENSKA</h3>
+            <textarea name="SVENSKA"></textarea>
+        </div>
+        <div>
+            <h3>Rövarspråket</h3>
+            <textarea name="ROVARSPRAK" disabled></textarea>
+        </div>
+    </div>
+    <p>
+        Copyright &copy; 2019 Andreas Åkerlöf
+    </p>
+
+    <script>
+        const SVENSKA = document.querySelector('[name=SVENSKA]');
+        const ROVARSPRAK = document.querySelector('[name=ROVARSPRAK]');
+        SVENSKA.addEventListener('keyup', translate);
+        SVENSKA.addEventListener('change', translate);
+
+        function translate() {
+            let string = this.value;
+            let newString = '';
+            const REG = /[bcdfghjklmnpqrstvwxz]/i;
+            for (const CHR in string) {
+                if (REG.test(string[CHR]))
+                    newString += string[CHR] + 'o' + string[CHR].toLowerCase();
+                else
+                    newString += string[CHR];
+                lastCHR = string[CHR];
+            }
+            ROVARSPRAK.value = newString;
+        }
+    </script>
+</body>
+
+</html>
